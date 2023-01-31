@@ -1,7 +1,7 @@
 const useWebsocket = () => {
   return {
     logVersion: () => {
-      console.log("0.0.0");
+      console.log("0.0.0.0");
     },
   };
 };

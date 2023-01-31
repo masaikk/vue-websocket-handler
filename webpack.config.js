@@ -17,7 +17,7 @@ module.exports = {
         // test指定的是规则生效的文件,意思是，用ts-loader来处理以ts为结尾的文件
         test: /\.ts$/,
         use: "ts-loader",
-        exclude: /node_modules/,
+        exclude: ["/node_modules/*", "/dev/*"],
       },
     ],
   },
