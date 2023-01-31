@@ -2,10 +2,10 @@
   "name": "vue-websocket-handler",
   "version": "0.0.0",
   "description": "an vue websocket handler",
-  "main": "src/index.ts",
+  "main": "./dist/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js --mode production"
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",

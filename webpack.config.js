@@ -11,13 +11,11 @@ module.exports = {
     globalObject: "this",
   },
   module: {
-    // 指定要价在的规则
     rules: [
       {
-        // test指定的是规则生效的文件,意思是，用ts-loader来处理以ts为结尾的文件
         test: /\.ts$/,
         use: "ts-loader",
-        exclude: ["/node_modules/*", "/dev/*"],
+        exclude: "/node_modules/",
       },
     ],
   },

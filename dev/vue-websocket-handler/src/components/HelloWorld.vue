@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
+import { useWebsocket } from "../../../../dist";
 
-defineProps<{ msg: string }>()
+const obj = useWebsocket();
 
-const count = ref(0)
+obj.logVersion();
+
+defineProps<{ msg: string }>();
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
-
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+<style scoped></style>
