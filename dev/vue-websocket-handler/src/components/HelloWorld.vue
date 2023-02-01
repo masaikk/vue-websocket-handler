@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { useWebsocket } from "../../../../dist";
 
-const obj = useWebsocket();
-
-obj.logVersion();
+console.log(useWebsocket);
 
 defineProps<{ msg: string }>();
 </script>

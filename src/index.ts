@@ -7,3 +7,5 @@ const useWebsocket = () => {
 };
 
 export { useWebsocket };
+
+export default useWebsocket();
