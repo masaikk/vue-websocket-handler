@@ -7,10 +7,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
-    library: "index",
+    library: "SocketHandler",
     libraryTarget: "umd",
-    libraryExport: "useWebsocket",
-    globalObject: "this",
+    libraryExport: "default",
+    // globalObject: "this",
   },
   module: {
     rules: [

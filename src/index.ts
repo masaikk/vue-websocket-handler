@@ -1,11 +1,10 @@
 const useWebsocket = () => {
   return {
     logVersion: () => {
-      console.log("0.0.0.0");
+      console.log("Version 0.0.0");
     },
   };
 };
+const SocketHandler = { useWebsocket };
 
-export { useWebsocket };
-
-export default useWebsocket();
+export default SocketHandler;
