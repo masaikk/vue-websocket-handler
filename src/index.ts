@@ -1,4 +1,5 @@
 import type { WebSocketConfig } from "./types";
+import { fixUrl } from "./utils";
 
 const useWebsocket = (config?: WebSocketConfig) => {
   const configHost: string = config?.host as string;
@@ -6,10 +7,10 @@ const useWebsocket = (config?: WebSocketConfig) => {
   if (port[0] == '"') {
     port = port.slice(1, port.length - 1);
   }
-  const protocol: string = `ws://${configHost}:${port}`;
-  console.log(protocol);
-  const thisWebSocket = new WebSocket(protocol);
-  thisWebSocket.onopen = (event) => {
+  const formattedUrl: string = fixUrl(config?.url);
+  const protocol: string = `ws://${configHost}:${port}${formattedUrl}`;
+  let thisWebSocket: WebSocket = new WebSocket(protocol);
+  thisWebSocket.onopen = () => {
     console.log(`successful setup WebSocket at ws://${configHost}:${port}`);
   };
   return {

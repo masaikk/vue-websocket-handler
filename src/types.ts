@@ -8,6 +8,9 @@ interface WebSocketConfig {
   // port
   port?: string | number;
 
+  // url
+  url?: string;
+
   // emitters used by websocket client
   emitters?: HandlerEmitter | HandlerEmitter[];
 }
