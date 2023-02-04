@@ -23,13 +23,18 @@ const useWebsocket = (config?: WebSocketConfig) => {
   thisWebSocket.onopen = () => {
     console.log(`successful setup WebSocket at ${protocol}`);
   };
+  thisWebSocket.onerror = () => {
+    console.error(`error`);
+  };
   const emitters: HandlerEmitter[] = [];
   if (config?.emitters as HandlerEmitter) {
     emitters.push(config?.emitters as HandlerEmitter);
   } else {
-    (config?.emitters as HandlerEmitter[]).map((emitter) => {
-      emitters.push(emitter);
-    });
+    if (typeof config?.emitters !== "undefined") {
+      (config?.emitters as HandlerEmitter[]).map((emitter) => {
+        emitters.push(emitter);
+      });
+    }
   }
   const timeout: number =
     typeof config?.timeout === "undefined" ? 5000 : config?.timeout;
