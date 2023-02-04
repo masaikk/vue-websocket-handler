@@ -5,6 +5,5 @@ const useWebsocket = () => {
     },
   };
 };
-const SocketHandler = { useWebsocket };
 
-export default SocketHandler;
+export { useWebsocket };
