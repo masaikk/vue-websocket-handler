@@ -25,7 +25,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:webpack": "webpack --config webpack.config.js",
-    "build:tsup": "tsup"
+    "build:tsup": "tsup",
+    "dev:tsup": "tsup"
   },
   "repository": {
     "type": "git",

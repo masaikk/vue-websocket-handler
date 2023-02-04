@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { useWebsocket } from "../../../../dist";
+import { webSocketHandler } from "../config/webSocket";
 
-
-const socketHandler = useWebsocket();
-socketHandler.logVersion();
+webSocketHandler.logVersion();
 
 defineProps<{ msg: string }>();
 </script>

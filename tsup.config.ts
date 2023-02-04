@@ -6,6 +6,7 @@ const tsupConfig = defineConfig({
   dts: true,
   splitting: true,
   clean: true,
+  watch: true,
 });
 
 export default tsupConfig;

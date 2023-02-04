@@ -1,5 +1,22 @@
-const useWebsocket = () => {
+import type { WebSocketConfig } from "./types";
+
+const useWebsocket = (config?: WebSocketConfig) => {
+  const configHost: string = config?.host as string;
+  let port: string = JSON.stringify(config?.port);
+  if (port[0] == '"') {
+    port = port.slice(1, port.length - 1);
+  }
+  const protocol: string = `ws://${configHost}:${port}`;
+  console.log(protocol);
+  const thisWebSocket = new WebSocket(protocol);
+  thisWebSocket.onopen = (event) => {
+    console.log(`successful setup WebSocket at ws://${configHost}:${port}`);
+  };
   return {
+    // client
+    client: thisWebSocket,
+
+    // log version in console
     logVersion: () => {
       console.log("Version 0.0.0");
     },
@@ -7,3 +24,4 @@ const useWebsocket = () => {
 };
 
 export { useWebsocket };
+export type { WebSocketConfig };
