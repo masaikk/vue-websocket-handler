@@ -13,6 +13,8 @@ interface WebSocketConfig {
 
   // emitters used by websocket client
   emitters?: HandlerEmitter | HandlerEmitter[];
+
+  timeout?: number;
 }
 
 export type { WebSocketConfig, HandlerEmitter };
