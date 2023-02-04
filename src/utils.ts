@@ -12,11 +12,11 @@ const fixUrl = (url?: string): string => {
 };
 
 /**
- * check websocket is
+ * check websocket api is available
  *
  */
 const checkWindowWebSocket = (): boolean => {
-  return true;
+  return WebSocket !== undefined;
 };
 
 export { fixUrl, checkWindowWebSocket };

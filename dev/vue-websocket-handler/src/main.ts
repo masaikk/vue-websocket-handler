@@ -1,5 +1,8 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import "./style.css";
+import App from "./App.vue";
+import { useWebSocketPlugin } from "../../../dist";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(useWebSocketPlugin);
+app.mount("#app");
