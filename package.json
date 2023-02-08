@@ -32,7 +32,8 @@
   },
   "keywords": [
     "vue",
-    "websocket"
+    "websocket",
+    "hooks"
   ],
   "author": "masaikk",
   "license": "ISC",
