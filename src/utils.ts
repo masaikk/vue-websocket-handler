@@ -19,4 +19,12 @@ const checkWindowWebSocket = (): boolean => {
   return WebSocket !== undefined;
 };
 
-export { fixUrl, checkWindowWebSocket };
+/**
+ *  log current version of this lib in console
+ *
+ */
+const logVersion = (): void => {
+  console.log("Version 0.0.0");
+};
+
+export { fixUrl, checkWindowWebSocket, logVersion };

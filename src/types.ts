@@ -1,5 +1,5 @@
 // emitter types
-type HandlerEmitter = (arg?: any) => {};
+type HandlerEmitter = (arg?: any) => any;
 
 interface WebSocketConfig {
   // host
@@ -19,7 +19,7 @@ interface WebSocketConfig {
 
 interface WebSocketHandlerType {
   // ws
-  client: WebSocket;
+  client?: WebSocket | null;
 
   // version information
   logVersion: () => void;
@@ -27,11 +27,14 @@ interface WebSocketHandlerType {
   //
   emitters?: HandlerEmitter | HandlerEmitter[];
 
-  onclose?: () => {};
-  onerror?: () => {};
-  onopen?: () => {};
-  onmessage?: () => {};
-  onreconnect?: () => {};
+  // createWebSocketInstance
+  createWebSocketInstance?: () => void;
+
+  onclose?: () => void;
+  onerror?: () => void;
+  onopen?: () => void;
+  onmessage?: () => void;
+  onreconnect?: () => void;
 }
 
 export type { WebSocketConfig, HandlerEmitter, WebSocketHandlerType };

@@ -3,7 +3,7 @@ import type {
   HandlerEmitter,
   WebSocketHandlerType,
 } from "./types";
-import { checkWindowWebSocket, fixUrl } from "./utils";
+import { checkWindowWebSocket, fixUrl, logVersion } from "./utils";
 
 const useWebSocketPlugin = {
   install(app: any) {
@@ -23,16 +23,30 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   }
   const formattedUrl: string = fixUrl(config?.url);
   const protocol: string = `ws://${configHost}:${port}${formattedUrl}`;
-  let thisWebSocket: WebSocket = new WebSocket(protocol);
+  let thisWebSocket: WebSocket | null = null;
+
+  const timeout: number =
+    typeof config?.timeout === "undefined" ? 5000 : config?.timeout;
+
+  // init once
+  let initWebSocketInstance = () => {
+    try {
+      thisWebSocket = new WebSocket(protocol);
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  initWebSocketInstance();
 
   /**
    * init WebSocket Event Handlers
    */
   let initWebSocketEventHandlers = () => {
-    thisWebSocket.onopen = () => {
+    (thisWebSocket as WebSocket).onopen = () => {
       console.log(`successful setup WebSocket at ${protocol}`);
     };
-    thisWebSocket.onerror = () => {
+    (thisWebSocket as WebSocket).onerror = () => {
       console.error(`error`);
     };
   };
@@ -47,21 +61,24 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
       });
     }
   }
-  const timeout: number =
-    typeof config?.timeout === "undefined" ? 5000 : config?.timeout;
 
   initWebSocketEventHandlers();
 
-  return {
-    // client
+  let webSocketHandler: WebSocketHandlerType = {
     client: thisWebSocket,
-
-    // log version in console
-    logVersion: () => {
-      console.log("Version 0.0.0");
-    },
+    logVersion: logVersion,
     emitters,
   };
+
+  webSocketHandler.createWebSocketInstance = () => {
+    try {
+      thisWebSocket = new WebSocket(protocol);
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  return webSocketHandler;
 };
 
 export { useWebSocket, useWebSocketPlugin };
