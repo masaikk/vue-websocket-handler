@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { webSocketHandler } from "../config/webSocket";
+import { onMounted } from "vue";
 
-webSocketHandler.logVersion();
+onMounted(() => {
+  setTimeout(() => {
+    (webSocketHandler.client as WebSocket).send("Hello");
+  }, 3000);
+  (webSocketHandler.client as WebSocket).onmessage=(msg:any)=>{
+    console.log(msg.data);
+  }
+});
+
 
 defineProps<{ msg: string }>();
 </script>

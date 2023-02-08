@@ -33,8 +33,9 @@ interface WebSocketHandlerType {
   onclose?: () => void;
   onerror?: () => void;
   onopen?: () => void;
-  onmessage?: () => void;
+  onmessage?: ((this: WebSocket, ev: MessageEvent<any>) => any) | null;
   onreconnect?: () => void;
+  sendMessage?: (message: string) => void;
 }
 
 export type { WebSocketConfig, HandlerEmitter, WebSocketHandlerType };

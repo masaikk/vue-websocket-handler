@@ -51,6 +51,8 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
     };
   };
 
+  initWebSocketEventHandlers();
+
   const emitters: HandlerEmitter[] = [];
   if (config?.emitters as HandlerEmitter) {
     emitters.push(config?.emitters as HandlerEmitter);
@@ -62,8 +64,6 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
     }
   }
 
-  initWebSocketEventHandlers();
-
   let webSocketHandler: WebSocketHandlerType = {
     client: thisWebSocket,
     logVersion: logVersion,
@@ -71,12 +71,19 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   };
 
   webSocketHandler.createWebSocketInstance = () => {
+    let _this = this;
     try {
       thisWebSocket = new WebSocket(protocol);
     } catch (e) {
+      if (false) {
+        // @ts-ignore
+        this.createWebSocketInstance();
+      }
       throw e;
     }
   };
+  webSocketHandler.onopen = initWebSocketEventHandlers;
+  webSocketHandler.onmessage = (webSocketHandler.client as WebSocket).onmessage;
 
   return webSocketHandler;
 };
