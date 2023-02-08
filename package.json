@@ -23,13 +23,12 @@
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
     "dev": "tsup"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/masaikk/vue-websocket-handler.git"
+    "url": "https://github.com/masaikk/vue-websocket-handler.git"
   },
   "keywords": [
     "vue",
