@@ -1,5 +1,5 @@
-import type { WebSocketConfig } from "vue-websocket-handler";
-import { useWebSocket } from "vue-websocket-handler";
+import type { WebSocketConfig } from "../../../../dist";
+import { useWebSocket } from "../../../../dist";
 
 const webSocketConfig: WebSocketConfig = {
   host: "localhost",
