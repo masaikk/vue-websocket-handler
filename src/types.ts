@@ -17,4 +17,21 @@ interface WebSocketConfig {
   timeout?: number;
 }
 
-export type { WebSocketConfig, HandlerEmitter };
+interface WebSocketHandlerType {
+  // ws
+  client: WebSocket;
+
+  // version information
+  logVersion: () => void;
+
+  //
+  emitters?: HandlerEmitter | HandlerEmitter[];
+
+  onclose?: () => {};
+  onerror?: () => {};
+  onopen?: () => {};
+  onmessage?: () => {};
+  onreconnect?: () => {};
+}
+
+export type { WebSocketConfig, HandlerEmitter, WebSocketHandlerType };

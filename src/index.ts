@@ -1,6 +1,6 @@
-import { useWebsocket, useWebSocketPlugin } from "./lib";
+import { useWebSocket, useWebSocketPlugin } from "./lib";
 import type { WebSocketConfig } from "./lib";
 
-export { useWebSocketPlugin, useWebsocket };
+export { useWebSocketPlugin, useWebSocket };
 
 export type { WebSocketConfig };

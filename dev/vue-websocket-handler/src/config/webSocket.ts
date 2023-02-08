@@ -1,12 +1,12 @@
 import type { WebSocketConfig } from "../../../../dist";
-import { useWebsocket } from "../../../../dist";
+import { useWebSocket } from "../../../../dist";
 
-const websocketConfig: WebSocketConfig = {
+const webSocketConfig: WebSocketConfig = {
   host: "localhost",
   port: "8899",
   url: "/ws",
 };
 
-const webSocketHandler = useWebsocket(websocketConfig);
+const webSocketHandler = useWebSocket(webSocketConfig);
 
 export { webSocketHandler };

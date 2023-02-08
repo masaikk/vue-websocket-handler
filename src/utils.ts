@@ -13,7 +13,7 @@ const fixUrl = (url?: string): string => {
 
 /**
  * check websocket api is available
- *
+ * @return {boolean}
  */
 const checkWindowWebSocket = (): boolean => {
   return WebSocket !== undefined;

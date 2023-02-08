@@ -1,4 +1,8 @@
-import type { WebSocketConfig, HandlerEmitter } from "./types";
+import type {
+  WebSocketConfig,
+  HandlerEmitter,
+  WebSocketHandlerType,
+} from "./types";
 import { checkWindowWebSocket, fixUrl } from "./utils";
 
 const useWebSocketPlugin = {
@@ -7,7 +11,7 @@ const useWebSocketPlugin = {
   },
 };
 
-const useWebsocket = (config?: WebSocketConfig) => {
+const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   if (!checkWindowWebSocket()) {
     console.error("Your browser doesn't support websocket");
     throw new Error("no support");
@@ -20,12 +24,19 @@ const useWebsocket = (config?: WebSocketConfig) => {
   const formattedUrl: string = fixUrl(config?.url);
   const protocol: string = `ws://${configHost}:${port}${formattedUrl}`;
   let thisWebSocket: WebSocket = new WebSocket(protocol);
-  thisWebSocket.onopen = () => {
-    console.log(`successful setup WebSocket at ${protocol}`);
+
+  /**
+   * init WebSocket Event Handlers
+   */
+  let initWebSocketEventHandlers = () => {
+    thisWebSocket.onopen = () => {
+      console.log(`successful setup WebSocket at ${protocol}`);
+    };
+    thisWebSocket.onerror = () => {
+      console.error(`error`);
+    };
   };
-  thisWebSocket.onerror = () => {
-    console.error(`error`);
-  };
+
   const emitters: HandlerEmitter[] = [];
   if (config?.emitters as HandlerEmitter) {
     emitters.push(config?.emitters as HandlerEmitter);
@@ -39,6 +50,8 @@ const useWebsocket = (config?: WebSocketConfig) => {
   const timeout: number =
     typeof config?.timeout === "undefined" ? 5000 : config?.timeout;
 
+  initWebSocketEventHandlers();
+
   return {
     // client
     client: thisWebSocket,
@@ -46,11 +59,10 @@ const useWebsocket = (config?: WebSocketConfig) => {
     // log version in console
     logVersion: () => {
       console.log("Version 0.0.0");
-      console.log(thisWebSocket);
     },
     emitters,
   };
 };
 
-export { useWebsocket, useWebSocketPlugin };
+export { useWebSocket, useWebSocketPlugin };
 export type { WebSocketConfig };
