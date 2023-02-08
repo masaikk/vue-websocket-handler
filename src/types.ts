@@ -35,7 +35,9 @@ interface WebSocketHandlerType {
   onopen?: () => void;
   onmessage?: ((this: WebSocket, ev: MessageEvent<any>) => any) | null;
   onreconnect?: () => void;
-  sendMessage?: (message: string) => void;
+  sendMessage?: (
+    data: string | ArrayBufferLike | Blob | ArrayBufferView
+  ) => void;
 }
 
 export type { WebSocketConfig, HandlerEmitter, WebSocketHandlerType };

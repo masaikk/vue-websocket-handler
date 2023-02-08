@@ -4,7 +4,7 @@ import { onMounted } from "vue";
 
 onMounted(() => {
   setTimeout(() => {
-    (webSocketHandler.client as WebSocket).send("Hello");
+    webSocketHandler.sendMessage!("hello")
   }, 3000);
   (webSocketHandler.client as WebSocket).onmessage=(msg:any)=>{
     console.log(msg.data);

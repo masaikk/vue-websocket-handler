@@ -84,6 +84,11 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   };
   webSocketHandler.onopen = initWebSocketEventHandlers;
   webSocketHandler.onmessage = (webSocketHandler.client as WebSocket).onmessage;
+  webSocketHandler.sendMessage = (
+    data: string | ArrayBufferLike | Blob | ArrayBufferView
+  ) => {
+    webSocketHandler.client?.send(data);
+  };
 
   return webSocketHandler;
 };
