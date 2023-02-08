@@ -19,7 +19,7 @@ interface WebSocketConfig {
 
 interface WebSocketHandlerType {
   // ws
-  client?: WebSocket | null;
+  client: WebSocket;
 
   // version information
   logVersion: () => void;

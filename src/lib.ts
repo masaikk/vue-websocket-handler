@@ -4,6 +4,7 @@ import type {
   WebSocketHandlerType,
 } from "./types";
 import { checkWindowWebSocket, fixUrl, logVersion } from "./utils";
+import * as assert from "assert";
 
 const useWebSocketPlugin = {
   install(app: any) {
@@ -23,21 +24,10 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   }
   const formattedUrl: string = fixUrl(config?.url);
   const protocol: string = `ws://${configHost}:${port}${formattedUrl}`;
-  let thisWebSocket: WebSocket | null = null;
+  let thisWebSocket: WebSocket = new WebSocket(protocol);
 
   const timeout: number =
     typeof config?.timeout === "undefined" ? 5000 : config?.timeout;
-
-  // init once
-  let initWebSocketInstance = () => {
-    try {
-      thisWebSocket = new WebSocket(protocol);
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  initWebSocketInstance();
 
   /**
    * init WebSocket Event Handlers
@@ -83,7 +73,10 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
     }
   };
   webSocketHandler.onopen = initWebSocketEventHandlers;
-  webSocketHandler.onmessage = (webSocketHandler.client as WebSocket).onmessage;
+  webSocketHandler.client.onmessage = (event) => {
+    console.log(event);
+  };
+
   webSocketHandler.sendMessage = (
     data: string | ArrayBufferLike | Blob | ArrayBufferView
   ) => {

@@ -6,7 +6,7 @@ onMounted(() => {
   setTimeout(() => {
     webSocketHandler.sendMessage!("hello")
   }, 3000);
-  (webSocketHandler.client as WebSocket).onmessage=(msg:any)=>{
+  webSocketHandler.onmessage=(msg:any)=>{
     console.log(msg.data);
   }
 });
