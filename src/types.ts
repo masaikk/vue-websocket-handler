@@ -33,7 +33,7 @@ interface WebSocketHandlerType {
   onclose?: () => void;
   onerror?: () => void;
   onopen?: () => void;
-  onmessage?: ((this: WebSocket, ev: MessageEvent<any>) => any) | null;
+  onmessage?: (event?: MessageEvent) => void;
   onreconnect?: () => void;
   sendMessage?: (
     data: string | ArrayBufferLike | Blob | ArrayBufferView

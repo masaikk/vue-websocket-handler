@@ -83,6 +83,10 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
     webSocketHandler.client?.send(data);
   };
 
+  webSocketHandler.client.onmessage = (event) => {
+    webSocketHandler.onmessage(event);
+  };
+
   return webSocketHandler;
 };
 

@@ -13,7 +13,7 @@
 npm i vue-websocket-handler -S
 ```
 
-you can use it in a single vue component. In a config file, you can initialize this handler.
+you can use it in a single vue component. In a config file, you can initialize this handler and export it.
 ```typescript
 import type { WebSocketConfig } from "vue-websocket-handler";
 import { useWebSocket } from "vue-websocket-handler";
@@ -37,7 +37,7 @@ export { webSocketHandler };
 
 ```
 
-in a vue file, you could use `sendMessage`
+in a vue file, you can import this handler and override `sendMessage` in `setup()` function like this:
 
 ```typescript
 import { webSocketHandler } from "../config/webSocket";
@@ -47,9 +47,10 @@ onMounted(() => {
   setTimeout(() => {
     webSocketHandler.sendMessage!("hello")
   }, 3000);
-  webSocketHandler.onmessage=(msg:any)=>{
-    console.log(msg.data);
-  }
+  webSocketHandler.onmessage = (event?: MessageEvent) => {
+    console.log(event);
+    console.log(event?.data)
+  };
 });
 ```
 
