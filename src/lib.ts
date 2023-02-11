@@ -8,7 +8,7 @@ import { CONNECT_TIMEOUT } from "./config";
 
 const useWebSocketPlugin = {
   install(app: any) {
-    app.config.globalProperties.$ws = this;
+    app.config.globalProperties.$ws = useWebSocket();
   },
 };
 
@@ -33,11 +33,14 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
    * init WebSocket Event Handlers
    */
   let initWebSocketEventHandlers = () => {
-    (thisWebSocket as WebSocket).onopen = () => {
+    thisWebSocket.onopen = () => {
       console.log(`successful setup WebSocket at ${protocol}`);
     };
-    (thisWebSocket as WebSocket).onerror = () => {
+    thisWebSocket.onerror = () => {
       console.error(`error`);
+    };
+    thisWebSocket.onclose = () => {
+      console.log("close websocket");
     };
   };
 

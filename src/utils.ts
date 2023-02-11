@@ -24,7 +24,7 @@ const checkWindowWebSocket = (): boolean => {
  *
  */
 const logVersion = (): void => {
-  console.log("Version 0.0.3");
+  console.log("Version 0.0.4");
 };
 
 export { fixUrl, checkWindowWebSocket, logVersion };

@@ -3,3 +3,4 @@ node_modules/
 package-lock.json
 src/
 .idea/
+tsup.config.ts
