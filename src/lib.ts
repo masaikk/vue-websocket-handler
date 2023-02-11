@@ -4,7 +4,7 @@ import type {
   WebSocketHandlerType,
 } from "./types";
 import { checkWindowWebSocket, fixUrl, logVersion } from "./utils";
-import * as assert from "assert";
+import { CONNECT_TIMEOUT } from "./config";
 
 const useWebSocketPlugin = {
   install(app: any) {
@@ -27,7 +27,7 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   let thisWebSocket: WebSocket = new WebSocket(protocol);
 
   const timeout: number =
-    typeof config?.timeout === "undefined" ? 5000 : config?.timeout;
+    typeof config?.timeout === undefined ? CONNECT_TIMEOUT : config?.timeout;
 
   /**
    * init WebSocket Event Handlers
@@ -56,36 +56,38 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
 
   let webSocketHandler: WebSocketHandlerType = {
     client: thisWebSocket,
+    protocol,
     logVersion: logVersion,
     emitters,
   };
 
-  webSocketHandler.createWebSocketInstance = () => {
-    let _this = this;
+  webSocketHandler.reCreateWebSocketInstance = () => {
     try {
-      thisWebSocket = new WebSocket(protocol);
+      thisWebSocket = new WebSocket(webSocketHandler.protocol);
+      webSocketHandler.addHandlers();
     } catch (e) {
-      if (false) {
-        // @ts-ignore
-        this.createWebSocketInstance();
-      }
       throw e;
     }
   };
-  webSocketHandler.onopen = initWebSocketEventHandlers;
-  webSocketHandler.client.onmessage = (event) => {
-    console.log(event);
+
+  webSocketHandler.addHandlers = () => {
+    webSocketHandler.onopen = initWebSocketEventHandlers;
+    webSocketHandler.client.onmessage = (event) => {
+      console.log(event);
+    };
+
+    webSocketHandler.sendMessage = (
+      data: string | ArrayBufferLike | Blob | ArrayBufferView
+    ) => {
+      webSocketHandler.client?.send(data);
+    };
+
+    webSocketHandler.client.onmessage = (event) => {
+      webSocketHandler.onmessage(event);
+    };
   };
 
-  webSocketHandler.sendMessage = (
-    data: string | ArrayBufferLike | Blob | ArrayBufferView
-  ) => {
-    webSocketHandler.client?.send(data);
-  };
-
-  webSocketHandler.client.onmessage = (event) => {
-    webSocketHandler.onmessage(event);
-  };
+  webSocketHandler.addHandlers();
 
   return webSocketHandler;
 };

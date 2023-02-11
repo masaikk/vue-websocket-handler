@@ -1,6 +1,6 @@
 {
   "name": "vue-websocket-handler",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a vue websocket handler library",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -19,16 +19,23 @@ interface WebSocketConfig {
 
 interface WebSocketHandlerType {
   // ws
+
   client: WebSocket;
+
+  // url
+  protocol: string;
 
   // version information
   logVersion: () => void;
 
-  //
-  emitters?: HandlerEmitter | HandlerEmitter[];
+  // handler's user functions
+  emitters: HandlerEmitter | HandlerEmitter[];
+
+  // add webSocket Handler
+  addHandlers?: () => void;
 
   // createWebSocketInstance
-  createWebSocketInstance?: () => void;
+  reCreateWebSocketInstance?: () => void;
 
   onclose?: () => void;
   onerror?: () => void;
