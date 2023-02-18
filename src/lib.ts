@@ -46,7 +46,7 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
 
   initWebSocketEventHandlers();
 
-  const emitters: HandlerEmitter[] = [];
+  const emitters: HandlerEmitter[] = new Array<HandlerEmitter>();
   if (config?.emitters as HandlerEmitter) {
     emitters.push(config?.emitters as HandlerEmitter);
   } else {
@@ -86,6 +86,16 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
     };
 
     webSocketHandler.client.onmessage = (event) => {
+      try {
+        (webSocketHandler.emitters as HandlerEmitter[]).forEach(
+          (emitter: HandlerEmitter) => {
+            if (event.data.websocketFlag || "" === emitter.arguments[1]) {
+            }
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
       webSocketHandler.onmessage(event);
     };
   };

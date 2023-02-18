@@ -1,6 +1,24 @@
-// emitter types
-type HandlerEmitter = (arg?: any) => any;
+/**
+ * emitter type function
+ */
+type HandlerEmitter = (emitFlag: string, arg?: any) => any;
 
+/**
+ * emitter type class
+ */
+type HandlerEmitterIntra = {
+  emitFlag: string;
+  effect: (arg?: any) => any;
+};
+
+/**
+ * union of emitter types
+ */
+type HandlerEmitterType = HandlerEmitter | HandlerEmitterIntra;
+
+/**
+ * config type of webSocket
+ */
 interface WebSocketConfig {
   // host
   host?: string;
@@ -47,4 +65,10 @@ interface WebSocketHandlerType {
   ) => void;
 }
 
-export type { WebSocketConfig, HandlerEmitter, WebSocketHandlerType };
+export type {
+  WebSocketConfig,
+  HandlerEmitter,
+  WebSocketHandlerType,
+  HandlerEmitterIntra,
+  HandlerEmitterType,
+};
