@@ -47,7 +47,7 @@ interface WebSocketHandlerType {
   logVersion: () => void;
 
   // handler's user functions
-  emitters: HandlerEmitter | HandlerEmitter[];
+  emitters: HandlerEmitterType | HandlerEmitterType[];
 
   // add webSocket Handler
   addHandlers?: () => void;

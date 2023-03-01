@@ -2,6 +2,8 @@ import type {
   WebSocketConfig,
   HandlerEmitter,
   WebSocketHandlerType,
+  HandlerEmitterType,
+  HandlerEmitterIntra,
 } from "./types";
 import { checkWindowWebSocket, fixUrl, logVersion } from "./utils";
 import { CONNECT_TIMEOUT } from "./config";
@@ -23,8 +25,8 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
     port = port.slice(1, port.length - 1);
   }
   const formattedUrl: string = fixUrl(config?.url);
-  const protocol: string = `ws://${configHost}:${port}${formattedUrl}`;
-  let thisWebSocket: WebSocket = new WebSocket(protocol);
+  const fullUrl: string = `ws://${configHost}:${port}${formattedUrl}`;
+  let thisWebSocket: WebSocket = new WebSocket(fullUrl);
 
   const timeout: number =
     typeof config?.timeout === undefined ? CONNECT_TIMEOUT : config?.timeout;
@@ -34,7 +36,7 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
    */
   let initWebSocketEventHandlers = () => {
     thisWebSocket.onopen = () => {
-      console.log(`successful setup WebSocket at ${protocol}`);
+      console.log(`successful create WebSocket at ${fullUrl}`);
     };
     thisWebSocket.onerror = () => {
       console.error(`error`);
@@ -46,12 +48,12 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
 
   initWebSocketEventHandlers();
 
-  const emitters: HandlerEmitter[] = new Array<HandlerEmitter>();
-  if (config?.emitters as HandlerEmitter) {
-    emitters.push(config?.emitters as HandlerEmitter);
+  const emitters: HandlerEmitterType[] = new Array<HandlerEmitterType>();
+  if (config?.emitters as HandlerEmitterType) {
+    emitters.push(config?.emitters as HandlerEmitterType);
   } else {
     if (typeof config?.emitters !== "undefined") {
-      (config?.emitters as HandlerEmitter[]).map((emitter) => {
+      (config?.emitters as HandlerEmitterType[]).map((emitter) => {
         emitters.push(emitter);
       });
     }
@@ -59,7 +61,7 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
 
   let webSocketHandler: WebSocketHandlerType = {
     client: thisWebSocket,
-    protocol,
+    protocol: fullUrl,
     logVersion: logVersion,
     emitters,
   };
@@ -87,9 +89,9 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
 
     webSocketHandler.client.onmessage = (event) => {
       try {
-        (webSocketHandler.emitters as HandlerEmitter[]).forEach(
-          (emitter: HandlerEmitter) => {
-            if (event.data.websocketFlag || "" === emitter.arguments[1]) {
+        (webSocketHandler.emitters as HandlerEmitterType[]).forEach(
+          (emitter: HandlerEmitterType) => {
+            if (emitter as HandlerEmitterIntra) {
             }
           }
         );
