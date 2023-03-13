@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { webSocketHandler } from "../config/webSocket";
 import { inject, onMounted } from "vue";
 import { useInjectWebSocket, WsKey } from "../../../../dist";
 

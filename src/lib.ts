@@ -7,20 +7,32 @@ import type {
 } from "./types";
 import { checkWindowWebSocket, fixUrl, logVersion } from "./utils";
 import { CONNECT_TIMEOUT } from "./config";
-import { inject, InjectionKey, reactive } from "vue";
+import { inject, InjectionKey } from "vue";
 
+/**
+ * for inject to get websocket handler in vue.use()
+ */
 const WsKey: InjectionKey<WebSocketHandlerType> = Symbol("ws");
 
+/**
+ * this plugin used for vue.use()
+ */
 const useWebSocketPlugin = {
-  install(app: any, options: any) {
-    let pluginWebSocketHandler = useWebSocket(options);
+  install(app: any, options?: WebSocketConfig) {
+    let pluginWebSocketHandler: WebSocketHandlerType = useWebSocket(options);
+    app.config.globalProperties.$ws = pluginWebSocketHandler;
     app.provide(WsKey, pluginWebSocketHandler);
   },
 };
 
-const useInjectWebSocket = () => {
+const useInjectWebSocket = (): WebSocketHandlerType => {
   return inject(WsKey);
 };
+
+/**
+ * create ws handler
+ * @param {WebSocketConfig} config
+ */
 
 const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   if (!checkWindowWebSocket()) {
