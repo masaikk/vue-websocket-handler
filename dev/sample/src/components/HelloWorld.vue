@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { webSocketHandler } from "../config/webSocket";
-import { onMounted } from "vue";
+// import { webSocketHandler } from "../config/webSocket";
+import { inject, onMounted } from "vue";
+import { useInjectWebSocket, WsKey } from "../../../../dist";
+
 
 onMounted(() => {
-  setTimeout(() => {
-    webSocketHandler.sendMessage!("hello");
-  }, 3000);
-  webSocketHandler.onmessage = (event?: MessageEvent) => {
-    console.log(event);
-    console.log(event?.data)
-  };
+  let wsh = inject(WsKey);
+  console.log(wsh);
 });
 
 

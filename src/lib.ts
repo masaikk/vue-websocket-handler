@@ -7,11 +7,19 @@ import type {
 } from "./types";
 import { checkWindowWebSocket, fixUrl, logVersion } from "./utils";
 import { CONNECT_TIMEOUT } from "./config";
+import { inject, InjectionKey, reactive } from "vue";
+
+const WsKey: InjectionKey<WebSocketHandlerType> = Symbol("ws");
 
 const useWebSocketPlugin = {
-  install(app: any) {
-    app.config.globalProperties.$ws = useWebSocket();
+  install(app: any, options: any) {
+    let pluginWebSocketHandler = useWebSocket(options);
+    app.provide(WsKey, pluginWebSocketHandler);
   },
+};
+
+const useInjectWebSocket = () => {
+  return inject(WsKey);
 };
 
 const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
@@ -107,5 +115,5 @@ const useWebSocket = (config?: WebSocketConfig): WebSocketHandlerType => {
   return webSocketHandler;
 };
 
-export { useWebSocket, useWebSocketPlugin };
+export { useWebSocket, useWebSocketPlugin, useInjectWebSocket, WsKey };
 export type { WebSocketConfig };

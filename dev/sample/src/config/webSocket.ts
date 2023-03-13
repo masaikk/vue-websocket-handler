@@ -1,5 +1,4 @@
 import type { WebSocketConfig } from "../../../../dist";
-import { useWebSocket } from "../../../../dist";
 
 const webSocketConfig: WebSocketConfig = {
   host: "localhost",
@@ -12,6 +11,4 @@ const webSocketConfig: WebSocketConfig = {
   ],
 };
 
-const webSocketHandler = useWebSocket(webSocketConfig);
-
-export { webSocketHandler };
+export { webSocketConfig };

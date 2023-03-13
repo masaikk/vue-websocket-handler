@@ -1,7 +1,7 @@
 # vueWebsocketHandler
 
 ### Description
-**vueWebsocketHandler** is a library used to handle WebSocket in Vue3.
+**vueWebsocketHandler** is a library used to handle WebSocket by hooks and plugin in Vue3.
 
 
 
@@ -10,7 +10,7 @@
 #### install this package
 
 ```shell
-npm i vue-websocket-handler -S
+npm install vue-websocket-handler --save
 ```
 
 you can use it in a single vue component. In a config file, you can initialize this handler and export it.
@@ -52,5 +52,37 @@ onMounted(() => {
     console.log(event?.data)
   };
 });
+```
+
+### backend sample 
+websocket server sample in fastapi.
+```python
+from fastapi import FastAPI
+from fastapi.websockets import WebSocket
+
+app = FastAPI()
+
+
+@app.websocket_route("/ws")
+async def websocket(websocket: WebSocket) -> None:
+    await websocket.accept()
+
+    r = 'hello'
+    while True:
+        msg = r
+        data = await websocket.receive_text()
+        print(data)
+        await websocket.send_json({"msg": msg, "data": data})
+
+
+if __name__ == '__main__':
+    import uvicorn
+
+    uvicorn.run(
+        app='main:app',
+        host="127.0.0.1",
+        port=8899,
+    )
+
 ```
 
